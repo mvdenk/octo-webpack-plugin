@@ -11,7 +11,7 @@ OctoWebpackPlugin.prototype.apply = function (compiler) {
 
     compiler.plugin('after-emit', function(compilation, callback) {
         var files = compilation.assets;
-        
+
         var pkg = octo.pack(options.type, {id: options.id, version: options.version});
 
         function pushOptions(file) {
@@ -30,7 +30,7 @@ OctoWebpackPlugin.prototype.apply = function (compiler) {
 
         function pushComplete(err, data) {
             if (err) {
-                onFail(err);                
+                onFail(err);
             } else {
                 onSuccess(data);
             }
@@ -47,20 +47,20 @@ OctoWebpackPlugin.prototype.apply = function (compiler) {
 
         function onSuccess(data) {
             console.log('Pushed package' + data.Title + ' v' + data.Version + ' (' + fileSizeString(data.PackageSizeBytes) + ') to ' + options.host);
-        }    
-        
+        }
+
         
         for (var nameAndPath in compilation.assets) {
             pkg.append(nameAndPath);
         }
 
-        pkg.toFile("./", function (error, data) {
+        pkg.toFile("./pkgs", function (error, data) {
             if (error) {
                 compilation.errors.push(new Error(error))
                 callback();
             } else {
                 console.log('Packed \'' + data.name + '\' with ' + Object.keys(files).length + ' files');
-                pushPackage(data.name);
+                pushPackage(data.path);
             }
         });
     });
