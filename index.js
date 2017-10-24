@@ -47,11 +47,10 @@ OctoWebpackPlugin.prototype.apply = function (compiler) {
 
         function onSuccess(data) {
             console.log('Pushed package' + data.Title + ' v' + data.Version + ' to ' + options.host);
-        }
-
-
-        for (var nameAndPath in compilation.assets) {
-            pkg.append(nameAndPath);
+        }            
+        
+        for (var name in compilation.assets) {            
+            pkg.append(name, compilation.assets[name].existsAt);        
         }
 
         pkg.toFile("./pkgs", function (error, data) {
