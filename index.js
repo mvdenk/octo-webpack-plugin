@@ -46,10 +46,10 @@ OctoWebpackPlugin.prototype.apply = function (compiler) {
         }
 
         function onSuccess(data) {
-            console.log('Pushed package' + data.Title + ' v' + data.Version + ' (' + fileSizeString(data.PackageSizeBytes) + ') to ' + options.host);
+            console.log('Pushed package' + data.Title + ' v' + data.Version + ' to ' + options.host);
         }
 
-        
+
         for (var nameAndPath in compilation.assets) {
             pkg.append(nameAndPath);
         }
